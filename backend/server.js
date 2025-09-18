@@ -11,7 +11,7 @@ const authRoutes = require('./routes/auth.routes');       // keep your existing 
 const adminAuthRoutes = require('./routes/adminAuth.routes');
 const choleraRoutes = require('./routes/choleraRoutes');  // Cholera route
 const Cholera = require('./models/cholera');              // import model
-const sendNotification = require('./utils/notification'); // import notification util
+const sendNotification = require('./utils/notifications'); // import notification util
 
 const app = express();
 
