@@ -1,29 +1,26 @@
-// npm intall twilio to run
-
 const nodemailer = require("nodemailer");
 const twilio = require("twilio");
 
 async function sendNotification(message) {
   try {
-    // Always log for debugging
     console.log("📢 Notification Triggered:", message);
 
     // ----- EMAIL -----
     if (process.env.ALERT_EMAIL && process.env.ALERT_PASS && process.env.ALERT_RECEIVER) {
       try {
         const transporter = nodemailer.createTransport({
-          service: "gmail", // or "hotmail" / "yahoo"
+          service: "hotmail", // change if Gmail or Yahoo
           auth: {
             user: process.env.ALERT_EMAIL,
-            pass: process.env.ALERT_PASS
-          }
+            pass: process.env.ALERT_PASS,
+          },
         });
 
         await transporter.sendMail({
           from: process.env.ALERT_EMAIL,
           to: process.env.ALERT_RECEIVER,
           subject: "🚨 SOS Alert",
-          text: message
+          text: message,
         });
 
         console.log("✅ Email sent to", process.env.ALERT_RECEIVER);
@@ -40,7 +37,7 @@ async function sendNotification(message) {
         await client.messages.create({
           body: message,
           from: process.env.TWILIO_NUMBER,
-          to: process.env.ALERT_PHONE
+          to: process.env.ALERT_PHONE,
         });
 
         console.log("✅ SMS sent to", process.env.ALERT_PHONE);
