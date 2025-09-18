@@ -29,6 +29,7 @@ exports.register = async (req, res) => {
   }
 };
 
+
 // POST /api/auth/login
 exports.login = async (req, res) => {
   try {
@@ -40,10 +41,7 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    if (user.activeSession) {
-      return res.status(403).json({ msg: "User already logged in elsewhere" });
-    }
-
+    // Always overwrite activeSession with a new one
     const jti = Date.now().toString();
     const token = generateToken(user._id, "user", jti);
 

@@ -29,6 +29,7 @@ exports.signup = async (req, res) => {
 };
 
 // POST /api/admin/login
+// POST /api/admin/login
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -41,14 +42,7 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    // Single-session check
-    if (admin.activeSession) {
-      return res
-        .status(403)
-        .json({ msg: "Admin already logged in elsewhere" });
-    }
-
-    // Generate token with JTI
+    // ✅ Always overwrite old session with a fresh one
     const jti = Date.now().toString();
     const token = generateToken(admin._id, "admin", jti);
 
@@ -56,7 +50,7 @@ exports.login = async (req, res) => {
     admin.activeSession = jti;
     await admin.save();
 
-    // ✅ Return token + full profile
+    // Return token + profile
     res.json({
       token,
       role: "admin",
@@ -64,7 +58,7 @@ exports.login = async (req, res) => {
         id: admin._id,
         email: admin.email,
         headName: admin.headName,
-        hospitalName: admin.hospitalName, // added this
+        hospitalName: admin.hospitalName,
       },
     });
   } catch (err) {
