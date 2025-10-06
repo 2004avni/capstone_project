@@ -1,5 +1,10 @@
 const express = require("express");
-const { register, login, logout } = require("../controllers/auth.controller");
+const {
+  register,
+  login,
+  logout,
+  getProfile,
+} = require("../controllers/auth.controller");
 const { protect } = require("../middleware/auth.middleware");
 const { registerValidator, loginValidator } = require("../utils/validators");
 const { validationResult } = require("express-validator");
@@ -13,20 +18,12 @@ const handleValidation = (req, res, next) => {
   next();
 };
 
-// Public
+// ------------------ Public Routes ------------------
 router.post("/register", registerValidator, handleValidation, register);
 router.post("/login", loginValidator, handleValidation, login);
 
-// Protected
-router.get("/me", protect("user"), (req, res) => {
-  const { _id, name, email, location } = req.user;
-  res.json({ msg: "Authenticated", user: { id: _id, name, email, location } });
-});
-
-router.get("/dashboard", protect("user"), (req, res) => {
-  res.json({ msg: `Welcome User: ${req.user.name}` });
-});
-
+// ------------------ Protected Routes ------------------
 router.post("/logout", protect("user"), logout);
+router.get("/profile", protect("user"), getProfile);
 
 module.exports = router;
