@@ -41,9 +41,20 @@ export default function UserProfile() {
 
   return (
     <div className="container mt-5">
+      {/* 🔙 Back to Dashboard Button */}
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Profile</h2>
+        <button 
+          className="btn btn-success" 
+          onClick={() => navigate("/Home")}
+        >
+          🏠 Back to Dashboard
+        </button>
+      </div>
+
       <div className="card shadow-sm border-0">
         <div className="card-header bg-success text-white">
-          <h5 className="mb-0">My Profile</h5>
+          <h5 className="mb-0">Profile Details</h5>
         </div>
         <div className="card-body">
           <div className="row mb-3">
@@ -67,3 +78,4 @@ export default function UserProfile() {
     </div>
   );
 }
+
