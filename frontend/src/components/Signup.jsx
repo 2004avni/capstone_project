@@ -169,6 +169,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./signup.css";
+import API from "../api";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -227,7 +228,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       // 🛠 Send city & region directly in the request body
-      const res = await axios.post("http://localhost:4000/api/auth/register", {
+      const res = await API.post("/api/auth/register", {
         name: formData.name,
         email: formData.email,
         password: formData.password,
