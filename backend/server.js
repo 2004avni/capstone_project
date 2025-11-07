@@ -83,7 +83,8 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
+app.use(cors({  origin: "https://capstone-project-plum-six.vercel.app", // your Vercel URL
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", credentials: true }));
 
 // Routes
 app.use("/api/auth", authRoutes);
