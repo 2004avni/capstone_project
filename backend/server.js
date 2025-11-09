@@ -83,8 +83,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors({  origin: "https://capstone-project-plum-six.vercel.app", // your Vercel URL
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", credentials: true }));
+app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -123,8 +122,8 @@ mongoose
 
     // Start server
     const PORT = process.env.PORT || 4000;
-    app.listen(PORT,"0.0.0.0", () => {
-      console.log(`🚀 Server running on ${PORT}`);
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
     });
   })
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));

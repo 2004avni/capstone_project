@@ -5,7 +5,7 @@ import axios from "axios";
 import { Eye, EyeOff, Droplets, Shield, Heart } from "lucide-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css"; // <-- custom animations + gradient
-import API from "../api"; 
+
 function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +18,7 @@ function Login({ setIsAuthenticated }) {
     setIsLoading(true);
     try {
 
-      const res = await API.post("/api/auth/login", {
+      const res = await axios.post("http://localhost:4000/api/auth/login", {
         email,
         password,
       });
